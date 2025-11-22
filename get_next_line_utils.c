@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayman <ayman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:06:56 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/21 19:17:50 by ayman            ###   ########.fr       */
+/*   Updated: 2025/11/22 12:15:27 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,21 @@ char	*gnl_buffer(char *buf)
 
 	i = 0;
 	j = 0;
+	if (buf == 0)
+	{
+		free(buf);
+		return (NULL);
+	}
 	buflen = gnl_strlen(buf);
 	while (buf[i] != '\n')
 		i++;
 	if (buflen == i + 1)
+	{
+		free(buf);
 		return (NULL);
+	}
 	alloc = buflen - (i + 1);
-	str = malloc(sizeof(char) * alloc + 1);
+	str = malloc(sizeof(char) * (alloc + 1));
 	while (j < alloc)
 	{
 		str[j] = buf[i + 1];

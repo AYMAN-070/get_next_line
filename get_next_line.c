@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayman <ayman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:20:52 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/21 18:40:25 by ayman            ###   ########.fr       */
+/*   Updated: 2025/11/22 13:32:40 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ char	*get_next_line(int fd)
 	static char	*store;
 	ssize_t		i;
 	char		buffer[BUFFER_SIZE + 1];
-	char		*line;
+	static char		*line;
 
+	free(line);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (gnl_strchr(store, '\n') == NULL)
@@ -32,7 +33,10 @@ char	*get_next_line(int fd)
 		buffer[i] = '\0';
 		store = gnl_strjoin(store, buffer);
 		if (store == 0 || *store == '\0')
+		{
+			free(store);
 			return (NULL);
+		}
 	}
 	line = gnl_substr(store);
 	if (line == NULL)
@@ -79,7 +83,7 @@ char	*gnl_substr(char *buf)
 	return (str);
 }
 
-/* #include <stdio.h>
+#include <stdio.h>
 #include <fcntl.h>
 
 int	main(void)
@@ -91,4 +95,4 @@ int	main(void)
 		printf("%s",txt);
 		txt = get_next_line(fd);
 	}
-} */
+}
