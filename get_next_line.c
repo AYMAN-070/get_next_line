@@ -6,7 +6,7 @@
 /*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:20:52 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/22 13:32:40 by ayhammou         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:27:31 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ char	*get_next_line(int fd)
 {
 	static char	*store;
 	ssize_t		i;
-	char		buffer[BUFFER_SIZE + 1];
-	static char		*line;
+	char		*buffer;
+	char		*line;
 
-	free(line);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (gnl_strchr(store, '\n') == NULL)
 	{
+		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (buffer == NULL)
+			return (NULL);
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i == -1)
 		{
 			free (store);
+			free (buffer);
 			return (NULL);
 		}
 		buffer[i] = '\0';
@@ -35,6 +38,7 @@ char	*get_next_line(int fd)
 		if (store == 0 || *store == '\0')
 		{
 			free(store);
+			store = NULL;
 			return (NULL);
 		}
 	}
@@ -83,7 +87,7 @@ char	*gnl_substr(char *buf)
 	return (str);
 }
 
-#include <stdio.h>
+/* #include <stdio.h>
 #include <fcntl.h>
 
 int	main(void)
@@ -93,6 +97,7 @@ int	main(void)
 	while (txt != NULL)
 	{
 		printf("%s",txt);
+		free (txt);
 		txt = get_next_line(fd);
 	}
-}
+} */

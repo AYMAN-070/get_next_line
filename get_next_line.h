@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayman <ayman@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:40:48 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/21 15:32:14 by ayman            ###   ########.fr       */
+/*   Updated: 2025/11/22 15:41:46 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 char	*gnl_substr(char *buf);
 size_t	gnl_strlen(const char *s);
-char	*gnl_strjoin(char *s1, const char *s2);
+char	*gnl_strjoin(char *s1, char *s2);
 char	*gnl_strchr(const char *s, int c);
 char	*gnl_buffer(char *buf);
 char	*get_next_line(int fd);
