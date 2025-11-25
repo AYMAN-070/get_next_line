@@ -6,21 +6,16 @@
 /*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:20:52 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/22 16:27:31 by ayhammou         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:50:19 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+char	*manage_store(char *store, char *buffer, int fd)
 {
-	static char	*store;
-	ssize_t		i;
-	char		*buffer;
-	char		*line;
+	ssize_t	i;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
 	while (gnl_strchr(store, '\n') == NULL)
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -30,18 +25,31 @@ char	*get_next_line(int fd)
 		if (i == -1)
 		{
 			free (store);
+			store = NULL;
 			free (buffer);
 			return (NULL);
 		}
 		buffer[i] = '\0';
-		store = gnl_strjoin(store, buffer);
-		if (store == 0 || *store == '\0')
+		if (i == 0)
 		{
-			free(store);
-			store = NULL;
-			return (NULL);
+			free (buffer);
+			break ;
 		}
+		store = gnl_strjoin(store, buffer);
 	}
+	return (store);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*store;
+	char		*buffer;
+	char		*line;
+
+	buffer = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	store = manage_store(store, buffer, fd);
 	line = gnl_substr(store);
 	if (line == NULL)
 	{
@@ -87,12 +95,24 @@ char	*gnl_substr(char *buf)
 	return (str);
 }
 
-/* #include <stdio.h>
+size_t	gnl_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (s == 0)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
+}
+/* 
+#include <stdio.h>
 #include <fcntl.h>
 
 int	main(void)
 {
-	int fd = open("test.txt", O_RDONLY);
+	int fd = open("test1.txt", O_RDONLY);
 	char *txt = get_next_line(fd);
 	while (txt != NULL)
 	{
@@ -100,4 +120,5 @@ int	main(void)
 		free (txt);
 		txt = get_next_line(fd);
 	}
-} */
+}
+ */

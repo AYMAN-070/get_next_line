@@ -6,7 +6,7 @@
 /*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:06:56 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/22 16:27:44 by ayhammou         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:13:23 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*gnl_buffer(char *buf)
 	buflen = gnl_strlen(buf);
 	while (buf[i] && buf[i] != '\n')
 		i++;
-	if (buflen == i + 1)
+	if (buflen == i + 1 || buflen == i)
 	{
 		free(buf);
 		return (NULL);
@@ -119,16 +119,4 @@ char	*gnl_strjoin(char *s1, char *s2)
 		return (NULL);
 	}
 	return (fill(join, s1, s2));
-}
-
-size_t	gnl_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (s == 0)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
 }
