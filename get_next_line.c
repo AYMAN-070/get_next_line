@@ -6,7 +6,7 @@
 /*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:20:52 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/25 14:50:19 by ayhammou         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:30:57 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	buffer = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	store = manage_store(store, buffer, fd);
 	line = gnl_substr(store);
@@ -71,7 +71,7 @@ size_t	alloc(char *buf)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (i - 1);
 }
 
 char	*gnl_substr(char *buf)
@@ -106,13 +106,12 @@ size_t	gnl_strlen(const char *s)
 		i++;
 	return (i);
 }
-/* 
-#include <stdio.h>
-#include <fcntl.h>
 
+/* #include <stdio.h>
+#include <fcntl.h>
 int	main(void)
 {
-	int fd = open("test1.txt", O_RDONLY);
+	int fd = open("test.txt", O_RDONLY);
 	char *txt = get_next_line(fd);
 	while (txt != NULL)
 	{
@@ -120,5 +119,4 @@ int	main(void)
 		free (txt);
 		txt = get_next_line(fd);
 	}
-}
- */
+} */

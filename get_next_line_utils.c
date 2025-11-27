@@ -6,7 +6,7 @@
 /*   By: ayhammou <ayhammou@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:06:56 by ayhammou          #+#    #+#             */
-/*   Updated: 2025/11/25 14:13:23 by ayhammou         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:57:55 by ayhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*alloc_newbuffer(size_t i, size_t alloc, char *buf)
 	}
 	str[j] = '\0';
 	free(buf);
+	buf = NULL;
 	return (str);
 }
 
@@ -39,9 +40,10 @@ char	*gnl_buffer(char *buf)
 	size_t	alloc;
 
 	i = 0;
-	if (buf == 0)
+	if (buf == NULL)
 	{
 		free(buf);
+		buf = NULL;
 		return (NULL);
 	}
 	buflen = gnl_strlen(buf);
@@ -50,6 +52,7 @@ char	*gnl_buffer(char *buf)
 	if (buflen == i + 1 || buflen == i)
 	{
 		free(buf);
+		buf = NULL;
 		return (NULL);
 	}
 	alloc = buflen - (i + 1);
